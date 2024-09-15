@@ -5,7 +5,7 @@ import com.example.transaction_microservice.domain.models.Supply;
 import com.example.transaction_microservice.infrastructure.adapters.input.dto.request.AddSupplyRequest;
 import com.example.transaction_microservice.infrastructure.adapters.input.dto.response.AddSupplyResponse;
 import com.example.transaction_microservice.infrastructure.adapters.input.mapper.AddSupplyMapper;
-import com.example.transaction_microservice.utils.Constants;
+import com.example.transaction_microservice.utils.DomainConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,6 @@ public class SupplyController {
     public ResponseEntity<AddSupplyResponse> createSupply(@RequestBody AddSupplyRequest addSupplyRequest) {
         Supply supply = addSupplyMapper.addSupplyRequestToSupply(addSupplyRequest);
         Supply supplySaved = supplyService.addSupply(supply);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new AddSupplyResponse(Constants.SUPPLY_CREATED,supplySaved.getItemId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AddSupplyResponse(DomainConstants.SUPPLY_CREATED,supplySaved.getItemId()));
     }
 }

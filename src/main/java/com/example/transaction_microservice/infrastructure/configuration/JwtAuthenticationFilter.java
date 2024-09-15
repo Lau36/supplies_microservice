@@ -1,6 +1,6 @@
 package com.example.transaction_microservice.infrastructure.configuration;
 
-import com.example.transaction_microservice.utils.Constants;
+import com.example.transaction_microservice.utils.DomainConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private static final String JWT_SECRET = System.getenv(Constants.TOKEN_KEY);
+    private static final String JWT_SECRET = System.getenv(DomainConstants.TOKEN_KEY);
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest  request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(Constants.TOKEN_START_WITH)) {
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(DomainConstants.TOKEN_START_WITH)) {
             return bearerToken.substring(7);
         }
         return null;

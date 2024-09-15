@@ -1,5 +1,6 @@
 package com.example.transaction_microservice.infrastructure.adapters.output.persistence;
 
+import com.example.transaction_microservice.domain.exceptions.InvalidFieldsException;
 import com.example.transaction_microservice.domain.exceptions.ItemNotFoundInStockException;
 import com.example.transaction_microservice.domain.exceptions.StockUpdateException;
 import com.example.transaction_microservice.domain.models.Supply;
@@ -9,7 +10,7 @@ import com.example.transaction_microservice.infrastructure.adapters.output.persi
 import com.example.transaction_microservice.infrastructure.adapters.output.persistence.mapper.SupplyMapper;
 import com.example.transaction_microservice.infrastructure.adapters.output.persistence.repository.SupplyRepository;
 import com.example.transaction_microservice.infrastructure.configuration.feignclient.StockClient;
-import com.example.transaction_microservice.utils.Constants;
+import com.example.transaction_microservice.utils.DomainConstants;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -35,11 +36,14 @@ public class SupplyPersistenceAdapter implements ISupplyPersistencePort {
             SupplyEntity supplySaved = supplyRepository.save(supplyEntity);
             return supplyMapper.toSupply(supplySaved);
         }
+        catch (FeignException.BadRequest e) {
+            throw new InvalidFieldsException(DomainConstants.INVALID_FIELDS);
+        }
         catch (FeignException.NotFound e) {
-            throw new ItemNotFoundInStockException(Constants.NOT_FOUND);
+            throw new ItemNotFoundInStockException(DomainConstants.NOT_FOUND);
         }
         catch (FeignException e){
-            throw new StockUpdateException(Constants.ERROR_WITH_MICROSERVICE);
+            throw new StockUpdateException(DomainConstants.ERROR_WITH_MICROSERVICE);
         }
     }
 }

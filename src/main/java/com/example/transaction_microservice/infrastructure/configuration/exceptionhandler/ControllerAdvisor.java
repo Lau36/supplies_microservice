@@ -1,5 +1,6 @@
 package com.example.transaction_microservice.infrastructure.configuration.exceptionhandler;
 
+import com.example.transaction_microservice.domain.exceptions.BadRequestException;
 import com.example.transaction_microservice.domain.exceptions.NotFoundException;
 import com.example.transaction_microservice.domain.exceptions.NotNegativeException;
 import com.example.transaction_microservice.domain.exceptions.SupplyUpdateException;
@@ -18,7 +19,7 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(SupplyUpdateException.class)
     public ResponseEntity<ExceptionResponse> handleSupplyUpdateException(SupplyUpdateException e) {
-        return ResponseEntity.badRequest().body(new ExceptionResponse(
+        return ResponseEntity.internalServerError().body(new ExceptionResponse(
                 String.format(Constans.ERROR_WITH_CONEXION_MICROSERVICE, e.getMessage()),
                 HttpStatus.BAD_REQUEST.toString(),
                 LocalDateTime.now()
@@ -37,6 +38,14 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 String.format(Constans.NOT_FOUND, e.getMessage()),
                 HttpStatus.NOT_FOUND.toString(),
+                LocalDateTime.now()
+        ));
+    }
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ExceptionResponse> handleBadRequestException(BadRequestException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
+                String.format(Constans.BAD_REQUEST, e.getMessage()),
+                HttpStatus.BAD_REQUEST.toString(),
                 LocalDateTime.now()
         ));
     }

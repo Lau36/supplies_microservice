@@ -4,7 +4,7 @@ import com.example.transaction_microservice.domain.exceptions.*;
 import com.example.transaction_microservice.domain.models.Supply;
 import com.example.transaction_microservice.domain.ports.output.ISupplyPersistencePort;
 import com.example.transaction_microservice.domain.usecases.SupplyUseCaseImpl;
-import com.example.transaction_microservice.utils.Constants;
+import com.example.transaction_microservice.utils.DomainConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -50,26 +50,36 @@ class SupplyUseCaseTest {
                 () -> supplyUseCase.addSupply(supplyNegative)
                 );
 
-        assertEquals(Constants.Field.QUANTITY.toString(), exception.getMessage());
+        assertEquals(DomainConstants.Field.QUANTITY.toString(), exception.getMessage());
     }
 
     @Test
     void addSupplyWhenItemDoesNotExistTest() {
-        when(supplyPersistencePort.addSupply(supply)).thenThrow(new ItemNotFoundInStockException(Constants.NOT_FOUND));
+        when(supplyPersistencePort.addSupply(supply)).thenThrow(new ItemNotFoundInStockException(DomainConstants.NOT_FOUND));
         Exception exception = assertThrows(
                 NotFoundException.class,
                 () -> supplyUseCase.addSupply(supply)
         );
-        assertEquals(Constants.NOT_FOUND, exception.getMessage());
+        assertEquals(DomainConstants.NOT_FOUND, exception.getMessage());
     }
 
     @Test
     void addSupplyWhenStockMicroserviceThrowsExceptionTest() {
-        when(supplyPersistencePort.addSupply(supply)).thenThrow(new StockUpdateException(Constants.ERROR_WITH_MICROSERVICE));
+        when(supplyPersistencePort.addSupply(supply)).thenThrow(new StockUpdateException(DomainConstants.ERROR_WITH_MICROSERVICE));
         Exception exception = assertThrows(
                 SupplyUpdateException.class,
                 () -> supplyUseCase.addSupply(supply)
         );
-        assertEquals(Constants.ERROR_WITH_MICROSERVICE, exception.getMessage());
+        assertEquals(DomainConstants.ERROR_WITH_MICROSERVICE, exception.getMessage());
+    }
+
+    @Test
+    void addSupplyWithInvalidFieldsExceptionTest() {
+        when(supplyPersistencePort.addSupply(supply)).thenThrow(new InvalidFieldsException(DomainConstants.INVALID_FIELDS));
+        Exception exception = assertThrows(
+                BadRequestException.class,
+                () -> supplyUseCase.addSupply(supply)
+        );
+        assertEquals(DomainConstants.INVALID_FIELDS, exception.getMessage());
     }
 }

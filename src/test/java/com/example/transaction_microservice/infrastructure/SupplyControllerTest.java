@@ -6,7 +6,7 @@ import com.example.transaction_microservice.infrastructure.adapters.input.contro
 import com.example.transaction_microservice.infrastructure.adapters.input.dto.request.AddSupplyRequest;
 import com.example.transaction_microservice.infrastructure.adapters.input.dto.response.AddSupplyResponse;
 import com.example.transaction_microservice.infrastructure.adapters.input.mapper.AddSupplyMapper;
-import com.example.transaction_microservice.utils.Constants;
+import com.example.transaction_microservice.utils.DomainConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -48,7 +48,7 @@ class SupplyControllerTest  {
     void addSupplyTest() throws Exception {
         Supply supply = new Supply(1L, 1L, 1L, 10, LocalDate.now());
         Supply supplySaved = new Supply(1L, 1L, 1L, 10, LocalDate.now());
-        AddSupplyResponse response = new AddSupplyResponse(Constants.SUPPLY_CREATED, 1L);
+        AddSupplyResponse response = new AddSupplyResponse(DomainConstants.SUPPLY_CREATED, 1L);
         when(addSupplyMapper.addSupplyRequestToSupply(any(AddSupplyRequest.class))).thenReturn(supply);
         when(supplyService.addSupply(any(Supply.class))).thenReturn(supplySaved);
         mockMvc.perform(post("/Supplies")
