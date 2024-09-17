@@ -17,14 +17,6 @@ public class Supply {
         this.date = date;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Long getAdminId() {
-        return adminId;
-    }
-
     public Long getItemId() {
         return itemId;
     }
@@ -33,7 +25,4 @@ public class Supply {
         return quantity;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
 }

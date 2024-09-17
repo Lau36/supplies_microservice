@@ -25,13 +25,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class SupplyControllerTest  {
-
-    @Mock
-    SupplyService supplyService;
+class SupplyControllerTest{
 
     @Mock
     AddSupplyMapper addSupplyMapper;
+
+    @Mock
+    SupplyService supplyService;
 
     @InjectMocks
     SupplyController supplyController;

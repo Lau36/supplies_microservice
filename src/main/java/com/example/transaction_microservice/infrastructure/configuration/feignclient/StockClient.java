@@ -2,6 +2,7 @@ package com.example.transaction_microservice.infrastructure.configuration.feignc
 
 import com.example.transaction_microservice.infrastructure.adapters.input.dto.request.AddStockRequest;
 import com.example.transaction_microservice.infrastructure.adapters.input.dto.response.AddStockResponse;
+import com.example.transaction_microservice.infrastructure.configuration.feignclient.config.FeignConfig;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
