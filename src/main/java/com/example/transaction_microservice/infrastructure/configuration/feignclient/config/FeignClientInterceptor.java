@@ -1,4 +1,4 @@
-package com.example.transaction_microservice.infrastructure.configuration.feignclient;
+package com.example.transaction_microservice.infrastructure.configuration.feignclient.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

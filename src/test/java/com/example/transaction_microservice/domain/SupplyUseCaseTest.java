@@ -2,8 +2,10 @@ package com.example.transaction_microservice.domain;
 
 import com.example.transaction_microservice.domain.exceptions.*;
 import com.example.transaction_microservice.domain.models.Supply;
+import com.example.transaction_microservice.domain.ports.output.IFeignClientPort;
 import com.example.transaction_microservice.domain.ports.output.ISupplyPersistencePort;
 import com.example.transaction_microservice.domain.usecases.SupplyUseCaseImpl;
+import com.example.transaction_microservice.domain.utils.DomainConstans;
 import com.example.transaction_microservice.utils.DomainConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,13 +15,15 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class SupplyUseCaseTest {
     @Mock
     ISupplyPersistencePort supplyPersistencePort;
+
+    @Mock
+    IFeignClientPort feignClientPort;
 
     @InjectMocks
     SupplyUseCaseImpl supplyUseCase;
@@ -34,10 +38,12 @@ class SupplyUseCaseTest {
 
     @Test
     void addSupplySusscessfullyTest() {
+        when(feignClientPort.addStock(supply)).thenReturn(DomainConstans.OK_MESSAGE);
         when(supplyPersistencePort.addSupply(supply)).thenReturn(supply);
 
         Supply supplySaved = supplyUseCase.addSupply(supply);
 
+        assertNotNull(supplySaved);
         assertEquals(supply, supplySaved);
         verify(supplyPersistencePort, times(1)).addSupply(supply);
     }
@@ -54,32 +60,9 @@ class SupplyUseCaseTest {
     }
 
     @Test
-    void addSupplyWhenItemDoesNotExistTest() {
-        when(supplyPersistencePort.addSupply(supply)).thenThrow(new ItemNotFoundInStockException(DomainConstants.NOT_FOUND));
-        Exception exception = assertThrows(
-                NotFoundException.class,
-                () -> supplyUseCase.addSupply(supply)
-        );
-        assertEquals(DomainConstants.NOT_FOUND, exception.getMessage());
-    }
+    void addSupplyWhenFeignClientFailsWithStockUpdateTest() {
+        when(feignClientPort.addStock(supply)).thenReturn(DomainConstants.ERROR_WITH_STOCK);
 
-    @Test
-    void addSupplyWhenStockMicroserviceThrowsExceptionTest() {
-        when(supplyPersistencePort.addSupply(supply)).thenThrow(new StockUpdateException(DomainConstants.ERROR_WITH_MICROSERVICE));
-        Exception exception = assertThrows(
-                SupplyUpdateException.class,
-                () -> supplyUseCase.addSupply(supply)
-        );
-        assertEquals(DomainConstants.ERROR_WITH_MICROSERVICE, exception.getMessage());
-    }
-
-    @Test
-    void addSupplyWithInvalidFieldsExceptionTest() {
-        when(supplyPersistencePort.addSupply(supply)).thenThrow(new InvalidFieldsException(DomainConstants.INVALID_FIELDS));
-        Exception exception = assertThrows(
-                BadRequestException.class,
-                () -> supplyUseCase.addSupply(supply)
-        );
-        assertEquals(DomainConstants.INVALID_FIELDS, exception.getMessage());
+        assertThrows(SupplyUpdateException.class, () -> supplyUseCase.addSupply(supply));
     }
 }

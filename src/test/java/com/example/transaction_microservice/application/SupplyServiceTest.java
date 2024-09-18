@@ -1,6 +1,6 @@
 package com.example.transaction_microservice.application;
 
-import com.example.transaction_microservice.application.services.SupplyService;
+import com.example.transaction_microservice.application.services.SupplyServiceImpl;
 import com.example.transaction_microservice.domain.models.Supply;
 import com.example.transaction_microservice.domain.ports.input.ISupplyUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ class SupplyServiceTest {
     ISupplyUseCase supplyUseCase;
 
     @InjectMocks
-    SupplyService supplyService;
+    SupplyServiceImpl supplyService;
 
     private Supply supply;
 
