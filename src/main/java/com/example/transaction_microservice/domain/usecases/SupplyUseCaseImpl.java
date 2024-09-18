@@ -19,11 +19,8 @@ public class SupplyUseCaseImpl implements ISupplyUseCase {
 
     @Override
     public Supply addSupply(Supply supply) {
-        if(supply.getQuantity() <  0){
+        if(supply.getQuantity() <  Integer.parseInt(DomainConstans.ZERO)){
             throw new NotNegativeException(DomainConstants.Field.QUANTITY.toString());
-        }
-        if(feignClientPort.addStock(supply).equals(DomainConstans.CONNECTION_ERROR)){
-            throw new ConnectionErrorException(DomainConstants.ERROR_WITH_MICROSERVICE);
         }
         if(feignClientPort.addStock(supply).equals(DomainConstans.OK_MESSAGE)){
             return supplyPersistencePort.addSupply(supply);

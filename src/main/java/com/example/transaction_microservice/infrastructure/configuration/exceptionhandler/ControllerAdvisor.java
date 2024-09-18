@@ -2,6 +2,7 @@ package com.example.transaction_microservice.infrastructure.configuration.except
 
 import com.example.transaction_microservice.domain.exceptions.*;
 import com.example.transaction_microservice.infrastructure.utils.Constans;
+import feign.RetryableException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,17 @@ public class ControllerAdvisor {
                 LocalDateTime.now()
         ));
     }
+
+    @ExceptionHandler(RetryableException.class)
+    public ResponseEntity<ExceptionResponse> handleRetryableException(RetryableException e) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
+                new ExceptionResponse(
+                        Constans.ERROR_CONNECTION,
+                        HttpStatus.SERVICE_UNAVAILABLE.toString(),
+                        LocalDateTime.now()
+                )
+        );
+    }
+
 
 }

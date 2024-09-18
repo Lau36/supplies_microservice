@@ -60,18 +60,9 @@ class SupplyUseCaseTest {
     }
 
     @Test
-    void addSupplyWhenFeignClientReturnsConnectionErrorTest() {
-        when(feignClientPort.addStock(supply)).thenReturn(DomainConstans.CONNECTION_ERROR);
-
-        assertThrows(ConnectionErrorException.class, () -> supplyUseCase.addSupply(supply));
-    }
-
-    @Test
     void addSupplyWhenFeignClientFailsWithStockUpdateTest() {
         when(feignClientPort.addStock(supply)).thenReturn(DomainConstants.ERROR_WITH_STOCK);
 
         assertThrows(SupplyUpdateException.class, () -> supplyUseCase.addSupply(supply));
     }
-
-
 }

@@ -24,7 +24,7 @@ public class StockServiceErrorEncoder implements ErrorDecoder {
         if(response != null){
             String errorMessage = parseErrorResponse(response);
             return switch (response.status()) {
-                case 400 -> new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
+                case 400 -> new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage); //Poner los codigos como constantes
                 case 404 -> new ResponseStatusException(HttpStatus.NOT_FOUND,  errorMessage);
                 case 500 ->
                         new SupplyUpdateException(DomainConstants.ERROR_WITH_MICROSERVICE);
@@ -40,7 +40,8 @@ public class StockServiceErrorEncoder implements ErrorDecoder {
         try {
             String body = IOUtils.toString(response.body().asInputStream(), StandardCharsets.UTF_8);
             ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> errorResponse = mapper.readValue(body, new TypeReference<Map<String, Object>>() {});
+            Map<String, Object> errorResponse = mapper.readValue(body, new TypeReference<>() {
+            });
             return (String) errorResponse.get(FeingConstans.MESSAGE);
 
         } catch (IOException e) {
