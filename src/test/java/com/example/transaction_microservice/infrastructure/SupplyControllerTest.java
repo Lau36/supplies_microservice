@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -46,8 +46,8 @@ class SupplyControllerTest{
 
     @Test
     void addSupplyTest() throws Exception {
-        Supply supply = new Supply(1L, 1L, 1L, 10, LocalDate.now());
-        Supply supplySaved = new Supply(1L, 1L, 1L, 10, LocalDate.now());
+        Supply supply = new Supply(1L, 1L, 1L, 10, LocalDateTime.now());
+        Supply supplySaved = new Supply(1L, 1L, 1L, 10, LocalDateTime.now());
         AddSupplyResponse response = new AddSupplyResponse(DomainConstants.SUPPLY_CREATED, 1L);
         when(addSupplyMapper.addSupplyRequestToSupply(any(AddSupplyRequest.class))).thenReturn(supply);
         when(supplyService.addSupply(any(Supply.class))).thenReturn(supplySaved);
