@@ -1,20 +1,20 @@
 package com.example.transaction_microservice.domain.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Supply {
     private Long id;
     private Long adminId;
     private Long itemId;
     private Integer quantity;
-    private LocalDate date;
+    private LocalDateTime supplyDate;
 
-    public Supply(Long id, Long adminId, Long itemId, Integer quantity, LocalDate date) {
+    public Supply(Long id, Long adminId, Long itemId, Integer quantity, LocalDateTime supplyDate) {
         this.id = id;
         this.adminId = adminId;
         this.itemId = itemId;
         this.quantity = quantity;
-        this.date = date;
+        this.supplyDate = supplyDate;
     }
 
     public Long getItemId() {

@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -26,7 +26,7 @@ class SupplyServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        supply = new Supply(1L, 1L, 1L, 10, LocalDate.now());
+        supply = new Supply(1L, 1L, 1L, 10, LocalDateTime.now());
     }
 
     @Test

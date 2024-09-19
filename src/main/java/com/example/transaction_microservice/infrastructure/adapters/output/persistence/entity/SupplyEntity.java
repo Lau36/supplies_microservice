@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -28,6 +28,6 @@ public class SupplyEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "supply_date")
+    private LocalDateTime supplyDate;
 }
