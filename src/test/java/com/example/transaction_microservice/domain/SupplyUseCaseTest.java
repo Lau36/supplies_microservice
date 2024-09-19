@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -33,7 +33,7 @@ class SupplyUseCaseTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        supply = new Supply(1L, 1L, 1L, 10, LocalDate.now());
+        supply = new Supply(1L, 1L, 1L, 10, LocalDateTime.now(), LocalDateTime.now());
     }
 
     @Test
@@ -50,7 +50,7 @@ class SupplyUseCaseTest {
 
     @Test
     void addSupplyWhenQuantityIsNegativeTest() {
-        Supply supplyNegative = new Supply(1L, 1L, 1L, -1, LocalDate.now());
+        Supply supplyNegative = new Supply(1L, 1L, 1L, -1, LocalDateTime.now(), LocalDateTime.now());
         Exception exception = assertThrows(
                 NotNegativeException.class,
                 () -> supplyUseCase.addSupply(supplyNegative)

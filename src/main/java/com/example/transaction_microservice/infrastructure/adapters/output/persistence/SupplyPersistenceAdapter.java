@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 public class SupplyPersistenceAdapter implements ISupplyPersistencePort {
@@ -20,8 +21,8 @@ public class SupplyPersistenceAdapter implements ISupplyPersistencePort {
     public Supply addSupply(Supply supply) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getDetails().toString();
-        LocalDate nextSupplyDate = LocalDate.now().plusDays(30);
-        SupplyEntity supplyEntity = new SupplyEntity(null, Long.valueOf(userId), supply.getItemId(),supply.getQuantity(), LocalDate.now(), nextSupplyDate);
+        LocalDateTime nextSupplyDate = LocalDateTime.now().plusDays(30);
+        SupplyEntity supplyEntity = new SupplyEntity(null, Long.valueOf(userId), supply.getItemId(),supply.getQuantity(), LocalDateTime.now(), nextSupplyDate);
         SupplyEntity supplySaved = supplyRepository.save(supplyEntity);
         return supplyMapper.toSupply(supplySaved);
     }
