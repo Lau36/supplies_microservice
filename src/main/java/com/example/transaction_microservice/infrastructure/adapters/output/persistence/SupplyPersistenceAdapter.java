@@ -20,7 +20,8 @@ public class SupplyPersistenceAdapter implements ISupplyPersistencePort {
     public Supply addSupply(Supply supply) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = auth.getDetails().toString();
-        SupplyEntity supplyEntity = new SupplyEntity(null, Long.valueOf(userId), supply.getItemId(),supply.getQuantity(), LocalDate.now());
+        LocalDate nextSupplyDate = LocalDate.now().plusDays(30);
+        SupplyEntity supplyEntity = new SupplyEntity(null, Long.valueOf(userId), supply.getItemId(),supply.getQuantity(), LocalDate.now(), nextSupplyDate);
         SupplyEntity supplySaved = supplyRepository.save(supplyEntity);
         return supplyMapper.toSupply(supplySaved);
     }

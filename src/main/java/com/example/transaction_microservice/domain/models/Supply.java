@@ -7,14 +7,16 @@ public class Supply {
     private Long adminId;
     private Long itemId;
     private Integer quantity;
-    private LocalDate date;
+    private LocalDate supplyDate;
+    private LocalDate nextSupplyDate;
 
-    public Supply(Long id, Long adminId, Long itemId, Integer quantity, LocalDate date) {
+    public Supply(Long id, Long adminId, Long itemId, Integer quantity, LocalDate supplyDate, LocalDate nextSupplyDate  ) {
         this.id = id;
         this.adminId = adminId;
         this.itemId = itemId;
         this.quantity = quantity;
-        this.date = date;
+        this.supplyDate = supplyDate;
+        this.nextSupplyDate = nextSupplyDate;
     }
 
     public Long getItemId() {
@@ -24,5 +26,9 @@ public class Supply {
     public Integer getQuantity() {
         return quantity;
     }
+
+    public LocalDate getSupplyDate() {return supplyDate;}
+
+    public LocalDate getNextSupplyDate() {return nextSupplyDate;}
 
 }

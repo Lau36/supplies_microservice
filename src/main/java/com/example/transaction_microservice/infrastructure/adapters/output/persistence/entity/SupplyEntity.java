@@ -28,6 +28,9 @@ public class SupplyEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "supply_date")
+    private LocalDate supplyDate;
+
+    @Column(name = "next_supply_date")
+    private LocalDate nextSupplyDate;
 }
