@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 
 public interface ISupplyUseCase {
     Supply addSupply(Supply supply);
-    LocalDateTime getNextSupplyDate(Long id);
+    LocalDateTime getNextSupplyDate(Long idItem);
 }

@@ -28,6 +28,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST,"/Supplies").hasAuthority(Roles.ROLE_CUSTOMER)
+                        .requestMatchers(HttpMethod.GET,"/Supplies").hasAuthority(Roles.ROLE_CUSTOMER)
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

@@ -62,6 +62,16 @@ public class ControllerAdvisor {
                 )
         );
     }
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleNotFoundException(NotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ExceptionResponse(
+                        Constans.NOT_FOUND,
+                        HttpStatus.BAD_REQUEST.toString(),
+                        LocalDateTime.now()
+                )
+        );
+    }
 
 
 }

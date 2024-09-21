@@ -8,6 +8,8 @@ import com.example.transaction_microservice.domain.ports.output.ISupplyPersisten
 import com.example.transaction_microservice.domain.utils.DomainConstans;
 import com.example.transaction_microservice.utils.DomainConstants;
 
+import java.time.LocalDateTime;
+
 public class SupplyUseCaseImpl implements ISupplyUseCase {
     private final ISupplyPersistencePort supplyPersistencePort;
     private final IFeignClientPort feignClientPort;
@@ -17,7 +19,6 @@ public class SupplyUseCaseImpl implements ISupplyUseCase {
         this.feignClientPort = feignClientPort;
     }
 
-    @Override
     public Supply addSupply(Supply supply) {
         if(supply.getQuantity() <  Integer.parseInt(DomainConstans.ZERO)){
             throw new NotNegativeException(DomainConstants.Field.QUANTITY.toString());
@@ -27,6 +28,14 @@ public class SupplyUseCaseImpl implements ISupplyUseCase {
         }
         throw new SupplyUpdateException(DomainConstants.ERROR_WITH_STOCK);
     }
+
+    public LocalDateTime getNextSupplyDate(Long idItem) {
+        Supply supply = supplyPersistencePort.getNextSupplyDate(idItem).orElseThrow(
+                () -> new NotFoundException(DomainConstans.NOT_FOUND_MESSAGE)
+        );
+        return supply.getNextSupplyDate();
+    }
+
 
 
 }

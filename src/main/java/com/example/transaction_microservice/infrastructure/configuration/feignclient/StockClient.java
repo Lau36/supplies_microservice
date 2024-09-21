@@ -5,12 +5,17 @@ import com.example.transaction_microservice.infrastructure.adapters.input.dto.re
 import com.example.transaction_microservice.infrastructure.configuration.feignclient.config.FeignConfig;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "stock", url="http://localhost:9090/Item", configuration = FeignConfig.class)
 public interface StockClient {
     @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddStockResponse> updateItem(@RequestBody AddStockRequest addStockRequest);
+
+    @GetMapping(value = "/InStock", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Long> getStock(@RequestParam int itemId);
 }
