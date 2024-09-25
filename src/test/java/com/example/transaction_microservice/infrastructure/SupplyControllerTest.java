@@ -19,7 +19,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -58,6 +60,24 @@ class SupplyControllerTest{
                 .andExpect(jsonPath("$.message").value(response.getMessage()))
                 .andExpect(jsonPath("$.id").value(response.getId()))
                 .andDo(print());
+    }
+
+    @Test
+    void getNextSupplyDate() throws Exception {
+        LocalDateTime nextSupplyDate = LocalDateTime.now();
+        Supply supply = new Supply(1L, 1L, 1L, 10, LocalDateTime.now(), nextSupplyDate);
+        when(supplyService.getNextSupplyDate(anyLong())).thenReturn(supply.getNextSupplyDate());
+
+        mockMvc.perform(get("/Supplies")
+                        .param("itemId", "1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nextSupplyDate[0]").value(supply.getNextSupplyDate().getYear()))
+                .andExpect(jsonPath("$.nextSupplyDate[1]").value(supply.getNextSupplyDate().getMonthValue()))
+                .andExpect(jsonPath("$.nextSupplyDate[2]").value(supply.getNextSupplyDate().getDayOfMonth()))
+                .andExpect(jsonPath("$.nextSupplyDate[3]").value(supply.getNextSupplyDate().getHour()))
+                .andExpect(jsonPath("$.nextSupplyDate[4]").value(supply.getNextSupplyDate().getMinute()))
+                .andExpect(jsonPath("$.nextSupplyDate[5]").value(supply.getNextSupplyDate().getSecond()));
     }
 
 }

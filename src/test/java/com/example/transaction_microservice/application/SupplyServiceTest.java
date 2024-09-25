@@ -36,4 +36,12 @@ class SupplyServiceTest {
     assertEquals( supply, supplySaved);
     verify(supplyUseCase, times(1)).addSupply(supply);
     }
+
+    @Test
+    void getNextSupplyDateTest(){
+        when(supplyService.getNextSupplyDate(supply.getItemId())).thenReturn(supply.getNextSupplyDate());
+        LocalDateTime result = supplyService.getNextSupplyDate(supply.getItemId());
+        assertEquals( supply.getNextSupplyDate(), result);
+        verify(supplyUseCase, times(1)).getNextSupplyDate(supply.getItemId());
+    }
 }

@@ -5,6 +5,6 @@ public class DomainConstans {
     }
 
     public static final String OK_MESSAGE = "Se añadió el stock en el microservicio";
-    public static final String ZERO = "0";
+    public static final Integer ZERO = 0;
     public static final String NOT_FOUND_MESSAGE= "No se encontró el item";
 }

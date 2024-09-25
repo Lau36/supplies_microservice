@@ -20,7 +20,7 @@ public class SupplyUseCaseImpl implements ISupplyUseCase {
     }
 
     public Supply addSupply(Supply supply) {
-        if(supply.getQuantity() <  Integer.parseInt(DomainConstans.ZERO)){
+        if(supply.getQuantity() <  DomainConstans.ZERO){
             throw new NotNegativeException(DomainConstants.Field.QUANTITY.toString());
         }
         if(feignClientPort.addStock(supply).equals(DomainConstans.OK_MESSAGE)){
@@ -35,7 +35,5 @@ public class SupplyUseCaseImpl implements ISupplyUseCase {
         );
         return supply.getNextSupplyDate();
     }
-
-
 
 }

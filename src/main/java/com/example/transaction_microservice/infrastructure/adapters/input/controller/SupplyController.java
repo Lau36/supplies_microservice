@@ -28,7 +28,7 @@ public class SupplyController {
 
     @Operation(summary = SwaggerConstants.ADD_SUPPLY,
             description = SwaggerConstants.ADD_SUPPLY_DESCRIPTION,
-            security = @SecurityRequirement(name = "bearerAuth"))
+            security = @SecurityRequirement(name = SwaggerConstants.BEARER))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = SwaggerConstants.ADDED_SUPPLY),
             @ApiResponse(responseCode = "400", description = SwaggerConstants.BAD_REQUEST)
@@ -40,6 +40,13 @@ public class SupplyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new AddSupplyResponse(DomainConstants.SUPPLY_CREATED,supplySaved.getItemId()));
     }
 
+    @Operation(summary = SwaggerConstants.GET_NEXT_SUPPLY_DATE,
+            description = SwaggerConstants.GET_NEXT_SUPPLY_DATE_DESCRIPTION,
+            security = @SecurityRequirement(name = SwaggerConstants.BEARER))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = SwaggerConstants.OK),
+            @ApiResponse(responseCode = "404", description = SwaggerConstants.NOT_FOUND_MESSAGE)
+    })
     @GetMapping
     public ResponseEntity<ResponseNextSupplyDate> getNextSupply(@RequestParam int itemId ) {
         LocalDateTime date = supplyService.getNextSupplyDate((long) itemId);

@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -64,5 +65,30 @@ class SupplyUseCaseTest {
         when(feignClientPort.addStock(supply)).thenReturn(DomainConstants.ERROR_WITH_STOCK);
 
         assertThrows(SupplyUpdateException.class, () -> supplyUseCase.addSupply(supply));
+    }
+
+    @Test
+    void getNextSupplyDateTest(){
+        when(supplyPersistencePort.getNextSupplyDate(1L)).thenReturn(Optional.of(supply));
+
+        LocalDateTime nextSupplyDate = supplyUseCase.getNextSupplyDate(1L);
+
+        assertNotNull(nextSupplyDate);
+        assertEquals(supply.getNextSupplyDate(), nextSupplyDate);
+
+        verify(supplyPersistencePort, times(1)).getNextSupplyDate(1L);
+    }
+
+    @Test
+    void getNextSupplyDateNotFoundTest(){
+        when(supplyPersistencePort.getNextSupplyDate(1L)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(
+                NotFoundException.class,
+                () -> supplyUseCase.getNextSupplyDate(1L)
+        );
+
+
+        assertEquals(DomainConstans.NOT_FOUND_MESSAGE, exception.getMessage());
     }
 }
