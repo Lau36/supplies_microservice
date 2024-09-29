@@ -18,4 +18,7 @@ public interface StockClient {
 
     @GetMapping(value = "/InStock", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Long> getStock(@RequestParam int itemId);
+
+    @GetMapping("/InStock ")
+    ResponseEntity<Boolean> isInStock(@RequestParam int itemId, @RequestParam int quantity);
 }

@@ -1,9 +1,10 @@
 package com.example.transaction_microservice.domain.usecases;
 
 import com.example.transaction_microservice.domain.exceptions.*;
+import com.example.transaction_microservice.domain.models.Sell;
 import com.example.transaction_microservice.domain.models.Supply;
 import com.example.transaction_microservice.domain.ports.input.ISupplyUseCase;
-import com.example.transaction_microservice.domain.ports.output.IFeignClientPort;
+import com.example.transaction_microservice.domain.ports.output.StockClientPort;
 import com.example.transaction_microservice.domain.ports.output.ISupplyPersistencePort;
 import com.example.transaction_microservice.domain.utils.DomainConstans;
 import com.example.transaction_microservice.utils.DomainConstants;
@@ -12,9 +13,9 @@ import java.time.LocalDateTime;
 
 public class SupplyUseCaseImpl implements ISupplyUseCase {
     private final ISupplyPersistencePort supplyPersistencePort;
-    private final IFeignClientPort feignClientPort;
+    private final StockClientPort feignClientPort;
 
-    public SupplyUseCaseImpl(ISupplyPersistencePort supplyPersistencePort, IFeignClientPort feignClientPort) {
+    public SupplyUseCaseImpl(ISupplyPersistencePort supplyPersistencePort, StockClientPort feignClientPort) {
         this.supplyPersistencePort = supplyPersistencePort;
         this.feignClientPort = feignClientPort;
     }
@@ -35,5 +36,6 @@ public class SupplyUseCaseImpl implements ISupplyUseCase {
         );
         return supply.getNextSupplyDate();
     }
+
 
 }

@@ -2,7 +2,7 @@ package com.example.transaction_microservice.domain;
 
 import com.example.transaction_microservice.domain.exceptions.*;
 import com.example.transaction_microservice.domain.models.Supply;
-import com.example.transaction_microservice.domain.ports.output.IFeignClientPort;
+import com.example.transaction_microservice.domain.ports.output.StockClientPort;
 import com.example.transaction_microservice.domain.ports.output.ISupplyPersistencePort;
 import com.example.transaction_microservice.domain.usecases.SupplyUseCaseImpl;
 import com.example.transaction_microservice.domain.utils.DomainConstans;
@@ -24,7 +24,7 @@ class SupplyUseCaseTest {
     ISupplyPersistencePort supplyPersistencePort;
 
     @Mock
-    IFeignClientPort feignClientPort;
+    StockClientPort feignClientPort;
 
     @InjectMocks
     SupplyUseCaseImpl supplyUseCase;

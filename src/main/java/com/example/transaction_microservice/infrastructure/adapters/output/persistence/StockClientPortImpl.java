@@ -1,14 +1,14 @@
 package com.example.transaction_microservice.infrastructure.adapters.output.persistence;
 
 import com.example.transaction_microservice.domain.models.Supply;
-import com.example.transaction_microservice.domain.ports.output.IFeignClientPort;
+import com.example.transaction_microservice.domain.ports.output.StockClientPort;
 import com.example.transaction_microservice.infrastructure.adapters.input.dto.request.AddStockRequest;
 import com.example.transaction_microservice.infrastructure.configuration.feignclient.FeingConstans;
 import com.example.transaction_microservice.infrastructure.configuration.feignclient.StockClient;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class FeignClientPortImpl implements IFeignClientPort {
+public class StockClientPortImpl implements StockClientPort {
 
     private final StockClient stockClient;
 
@@ -17,5 +17,9 @@ public class FeignClientPortImpl implements IFeignClientPort {
         AddStockRequest request = new AddStockRequest(supply.getItemId(), supply.getQuantity());
         stockClient.updateItem(request);
         return FeingConstans.OK_MESSAGE;
+    }
+    @Override
+    public Boolean inStock(Long itemId, Integer quantity) {
+        return stockClient.isInStock(itemId.intValue(), quantity).getBody();
     }
 }
