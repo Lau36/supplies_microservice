@@ -10,6 +10,7 @@ import com.example.transaction_microservice.domain.ports.output.*;
 import com.example.transaction_microservice.domain.usecases.SellUseCaseImpl;
 import com.example.transaction_microservice.domain.usecases.SupplyUseCaseImpl;
 import com.example.transaction_microservice.infrastructure.adapters.output.persistence.*;
+import com.example.transaction_microservice.infrastructure.adapters.output.persistence.mapper.SellMapper;
 import com.example.transaction_microservice.infrastructure.adapters.output.persistence.mapper.SupplyMapper;
 import com.example.transaction_microservice.infrastructure.adapters.output.persistence.repository.SellRepository;
 import com.example.transaction_microservice.infrastructure.adapters.output.persistence.repository.SupplyRepository;
@@ -44,8 +45,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public ISellPersistencePort sellPersistencePort(final SellRepository sellRepository) {
-        return new SellPersistenceAdapter(sellRepository);
+    public ISellPersistencePort sellPersistencePort(final SellRepository sellRepository, final SellMapper sellMapper) {
+        return new SellPersistenceAdapter(sellRepository, sellMapper);
     }
 
     @Bean

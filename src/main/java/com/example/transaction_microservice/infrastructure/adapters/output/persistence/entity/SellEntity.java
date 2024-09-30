@@ -1,7 +1,6 @@
 package com.example.transaction_microservice.infrastructure.adapters.output.persistence.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +16,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "sell")
 public class SellEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
     private BigDecimal totalPrice;

@@ -5,18 +5,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class BuyResponse {
-    private List<Item> itemsInCartId;
+    private List<Item> itemsInCart;
     private LocalDateTime lastUpdateCart;
     private BigDecimal totalPrice;
 
-    public BuyResponse(List<Item> itemsInCartId, LocalDateTime lastUpdateCart, BigDecimal totalPrice) {
-        this.itemsInCartId = itemsInCartId;
+    public BuyResponse(List<Item> itemsInCart, LocalDateTime lastUpdateCart, BigDecimal totalPrice) {
+        this.itemsInCart = itemsInCart;
         this.lastUpdateCart = lastUpdateCart;
         this.totalPrice = totalPrice;
     }
 
-    public List<Item> getItemsInCartId() {
-        return itemsInCartId;
+    public List<Item> getItemsInCart() {
+        return itemsInCart;
     }
 
     public LocalDateTime getLastUpdateCart() {

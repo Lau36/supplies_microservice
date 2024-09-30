@@ -13,4 +13,6 @@ public class SwaggerConstants {
     public static final String OK = "Todo bien";
     public static final String GET_NEXT_SUPPLY_DATE = "Obtener la fecha del proximo suministro";
     public static final String GET_NEXT_SUPPLY_DATE_DESCRIPTION = "Se obtiene la fecha en la que se va a estar disponible ese articulo";
+    public static final String ADD_SELL = "Crea una venta";
+    public static final String ADD_SELL_DESCRIPTION = "Se crea una venta con los productos que tiene en el carrito el usuario";
 }

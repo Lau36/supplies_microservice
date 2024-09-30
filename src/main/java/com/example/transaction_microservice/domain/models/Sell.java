@@ -1,16 +1,15 @@
 package com.example.transaction_microservice.domain.models;
 
-import com.example.transaction_microservice.domain.utils.Item;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
 public class Sell {
-    private Long id;
-    private Long userId;
-    private BigDecimal totalPrice;
-    private LocalDateTime sellDate;
+    private final Long id;
+    private final Long userId;
+    private final BigDecimal totalPrice;
+    private final LocalDateTime sellDate;
 
     public Sell(Long id,  Long userId, BigDecimal totalPrice, LocalDateTime sellDate) {
         this.id = id;

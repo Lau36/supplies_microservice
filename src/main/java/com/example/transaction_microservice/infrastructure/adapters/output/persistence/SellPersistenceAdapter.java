@@ -2,6 +2,8 @@ package com.example.transaction_microservice.infrastructure.adapters.output.pers
 
 import com.example.transaction_microservice.domain.models.Sell;
 import com.example.transaction_microservice.domain.ports.output.ISellPersistencePort;
+import com.example.transaction_microservice.infrastructure.adapters.output.persistence.entity.SellEntity;
+import com.example.transaction_microservice.infrastructure.adapters.output.persistence.mapper.SellMapper;
 import com.example.transaction_microservice.infrastructure.adapters.output.persistence.repository.SellRepository;
 import lombok.AllArgsConstructor;
 
@@ -9,9 +11,11 @@ import lombok.AllArgsConstructor;
 public class SellPersistenceAdapter implements ISellPersistencePort {
 
     private final SellRepository sellRepository;
+    private final SellMapper sellMapper;
 
     @Override
     public Sell saveSell(Sell sell) {
-        return null;
+        SellEntity sellSaved = sellRepository.save(sellMapper.toSellEntity(sell));
+        return sellMapper.toSell(sellSaved);
     }
 }

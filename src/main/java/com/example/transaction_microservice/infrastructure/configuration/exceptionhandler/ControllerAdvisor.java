@@ -72,6 +72,16 @@ public class ControllerAdvisor {
                 )
         );
     }
+    @ExceptionHandler(PurchaseException.class)
+    public ResponseEntity<ExceptionResponse> handlePurchaseException(PurchaseException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                new ExceptionResponse(
+                        e.getMessage(),
+                        HttpStatus.INTERNAL_SERVER_ERROR.toString(),
+                        LocalDateTime.now()
+                )
+        );
+    }
 
 
 }
